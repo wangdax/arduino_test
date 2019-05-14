@@ -1,17 +1,21 @@
 #include"speed.h"
  
-#define STOP      0
-#define FORWARD   1
-#define BACKWARD  2
+#define STOP      5
+#define FORWARD   2
+#define BACKWARD  1
 #define TURNLEFT  3
 #define TURNRIGHT 4
 
 void SPEED::Init_Pin()
 {
-  pinMode(leftMotor1, OUTPUT);
-  pinMode(leftMotor2, OUTPUT);
-  pinMode(rightMotor1, OUTPUT);
-  pinMode(rightMotor2, OUTPUT); 
+    pinMode(input_left1_1,OUTPUT);
+    pinMode(input_left1_2,OUTPUT);
+    pinMode(input_left2_1,OUTPUT);
+    pinMode(input_left2_2,OUTPUT);
+    pinMode(input_right1_1,OUTPUT);
+    pinMode(input_right1_2,OUTPUT);
+    pinMode(input_right2_1,OUTPUT);
+    pinMode(input_right2_2,OUTPUT);
 }
 
 
@@ -48,9 +52,7 @@ int SPEED::SpeedDetection()
     return 1;
   }
   else
-    return 0;
-  
-  
+    return 0;  
   }
 
 void SPEED::motorRun(int cmd)
@@ -58,38 +60,61 @@ void SPEED::motorRun(int cmd)
   switch(cmd){
     case FORWARD:
      // Serial.println("FORWARD"); //输出状态
-      digitalWrite(leftMotor1, HIGH);
-      digitalWrite(leftMotor2, LOW);
-      digitalWrite(rightMotor1, HIGH);
-      digitalWrite(rightMotor2, LOW);
+        digitalWrite(input_left1_1,HIGH); //给高电平
+        digitalWrite(input_left1_2,LOW);  //给低电平
+        digitalWrite(input_left2_2,HIGH); //给高电平
+        digitalWrite(input_left2_1,LOW);  //给低电平
+        digitalWrite(input_right1_1,HIGH); //给高电平
+        digitalWrite(input_right1_2,LOW);  //给低电平
+        digitalWrite(input_right2_1,HIGH); //给高电平
+        digitalWrite(input_right2_2,LOW);  //给低电平
       break;
      case BACKWARD:
       //Serial.println("BACKWARD"); //输出状态
-      digitalWrite(leftMotor1, LOW);
-      digitalWrite(leftMotor2, HIGH);
-      digitalWrite(rightMotor1, LOW);
-      digitalWrite(rightMotor2, HIGH);
-      break;
+        digitalWrite(input_left1_1,LOW); //给高电平
+        digitalWrite(input_left1_2,HIGH);  //给低电平
+        digitalWrite(input_left2_2,LOW); //给高电平
+        digitalWrite(input_left2_1,HIGH);  //给低电平
+        digitalWrite(input_right1_1,LOW); //给高电平
+        digitalWrite(input_right1_2,HIGH);  //给低电平
+        digitalWrite(input_right2_1,LOW); //给高电平
+        digitalWrite(input_right2_2,HIGH);  //给低电平
+        break;
      case TURNLEFT:
       //Serial.println("TURN  LEFT"); //输出状态
-      digitalWrite(leftMotor1, HIGH);
-      digitalWrite(leftMotor2, LOW);
-      digitalWrite(rightMotor1, LOW);
-      digitalWrite(rightMotor2, HIGH);
-      break;
+        digitalWrite(input_left1_1,HIGH); //给高电平
+        digitalWrite(input_left1_2,LOW);  //给低电平
+        digitalWrite(input_left2_2,HIGH); //给高电平
+        digitalWrite(input_left2_1,LOW);  //给低电平
+        digitalWrite(input_right1_1,LOW); //给高电平
+        digitalWrite(input_right1_2,HIGH);  //给低电平
+        digitalWrite(input_right2_1,LOW); //给高电平
+        digitalWrite(input_right2_2,HIGH);  //给低电平
+        break;
      case TURNRIGHT:
      // Serial.println("TURN  RIGHT"); //输出状态
-      digitalWrite(leftMotor1, LOW);
-      digitalWrite(leftMotor2, HIGH);
-      digitalWrite(rightMotor1, HIGH);
-      digitalWrite(rightMotor2, LOW);
-      break;
-     default:
+        digitalWrite(input_left1_1,LOW); //给高电平
+        digitalWrite(input_left1_2,HIGH);  //给低电平
+        digitalWrite(input_left2_2,LOW); //给高电平
+        digitalWrite(input_left2_1,HIGH);  //给低电平
+        digitalWrite(input_right1_1,HIGH); //给高电平
+        digitalWrite(input_right1_2,LOW);  //给低电平
+        digitalWrite(input_right2_1,HIGH); //给高电平
+        digitalWrite(input_right2_2,LOW);  //给低电平
+        break;
+     case STOP:
       //Serial.println("STOP"); //输出状态
-      digitalWrite(leftMotor1, LOW);
-      digitalWrite(leftMotor2, LOW);
-      digitalWrite(rightMotor1, LOW);
-      digitalWrite(rightMotor2, LOW);
+        digitalWrite(input_left1_1,LOW); //给高电平
+        digitalWrite(input_left1_2,LOW);  //给低电平
+        digitalWrite(input_left2_1,LOW); //给高电平
+        digitalWrite(input_left2_2,LOW);  //给低电平
+        digitalWrite(input_right1_1,LOW); //给高电平
+        digitalWrite(input_right1_2,LOW);  //给低电平
+        digitalWrite(input_right2_1,LOW); //给高电平
+        digitalWrite(input_right2_2,LOW);  //给低电平
+        break;
+     default:
+        break;
   }
 }
  

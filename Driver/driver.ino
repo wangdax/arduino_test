@@ -1,3 +1,21 @@
+//4-7 对应left1、right1的电机驱动板1
+//pin4 ---IN1
+//pin5 ---IN2
+//pin6 ---IN3
+//pin7 ---IN4
+
+//10-13 对应left2、right2的电机驱动板2
+//pin10 ---IN1
+//pin11 ---IN2
+//pin12 ---IN3
+//pin13 ---IN4
+
+//L298N 
+// IN1     IN2    
+// 0        1     正转
+// 1        0     反转
+// 0        0     制动
+// 1        1     制动
 //四路电机的测速模块使用的外部中断引脚是pin2、3、A0、8(left1,right1,left2,right2)
 //2、3为外部中断int0、int1，
 //A0对应PCINT8 (PCMSK1 / PCIF1 / PCIE1)
@@ -5,9 +23,13 @@
 
 #include"speed.h"
 
+const int TrigPin = A5; //发出超声波
+const int EchoPin = 9; //收到反射回来的超声波
 SPEED speed;
 void Init_Interrupt()
 {
+  pinMode(TrigPin, OUTPUT); 
+  pinMode(EchoPin, INPUT); 
    //外部中断 pin change interrupt 
   pinMode(0,  INPUT_PULLUP);
   pinMode(8,  INPUT_PULLUP);
@@ -23,7 +45,17 @@ void Init_Interrupt()
   attachInterrupt(0,Right1Count_CallBack,FALLING);//设置外部中断函数0  left1
   attachInterrupt(1,Left1Count_CallBack,FALLING);//设置外部中断函数1   right1
   }
-
+void  Ultrasonic()
+{
+   digitalWrite(TrigPin, LOW); //低高低电平发一个短时间脉冲去TrigPin  
+   delayMicroseconds(2);       // delayMicroseconds在更小的时间内延时准确 
+   digitalWrite(TrigPin, HIGH);  
+   delayMicroseconds(10);  
+   digitalWrite(TrigPin, LOW); //通过这里控制超声波的发射    
+   float cm = pulseIn(EchoPin, HIGH)/58.0; //将回波时间换算成cm  
+   Serial.println(cm); 
+   delay(1000); 
+  }
 void setup() 
 {
   Serial.begin(115200);//串口初始化
@@ -38,10 +70,11 @@ void loop() {
      Init_Interrupt();
     
    }
+  Ultrasonic();
   if(Serial.available()>0)
   {
-    char cmd = Serial.read();  
-    Serial.print(cmd);
+    int cmd = Serial.read();  
+    //Serial.print(cmd);
     speed.motorRun(cmd);      
   }  
 }

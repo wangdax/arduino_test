@@ -12,10 +12,15 @@ class SPEED
           unsigned long now_time = 0, old_time = 0; // 时间标记
           float left1_speed,left2_speed,right1_speed,right2_speed;//四个轮子的速度
           //四路电机对应的管脚
-          int leftMotor1 = 4;
-          int leftMotor2 = 5;
-          int rightMotor1 = 6;
-          int rightMotor2 = 7;
+         int input_left1_1 = 4; // 定义uno的pin 5 向 input1 输出 
+         int input_left1_2 = 5; 
+         int input_right1_1 = 6; 
+         int input_right1_2 = 7;
+
+         int input_left2_1 = 10; // 定义uno的pin 5 向 input1 输出 
+         int input_left2_2 = 11; 
+         int input_right2_1 = 12; 
+         int input_right2_2 = 13;
 
      
      
